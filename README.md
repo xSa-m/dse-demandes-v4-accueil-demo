@@ -24,8 +24,7 @@ Ouvre `http://127.0.0.1:45221`.
 
 Site statique, pas d’auth, pas de backend. `npm run build` produit `dist/`.
 
-Public demo:
-https://xsa-m.github.io/dse-demandes-v4-accueil-demo/
+Public HTTPS (no backend):
+https://raw.githack.com/xSa-m/dse-demandes-v4-accueil-demo/main/index.html
 
-Fallback while Pages warms:
-https://raw.githack.com/xSa-m/dse-demandes-v4-accueil-demo/main/docs/index.html
+Source: https://github.com/xSa-m/dse-demandes-v4-accueil-demo
