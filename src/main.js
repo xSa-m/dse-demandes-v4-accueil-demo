@@ -14,11 +14,11 @@ const CANDIDATES = [
 ]
 
 const TITLES = {
-  accueil: ['Accueil', 'Trois portes. Un geste. Rien n’est envoyé hors de ce navigateur.'],
-  traiter: ['Traiter', 'Identité d’abord — liste fictive, score simulé.'],
-  verifier: ['Vérifier', 'Aucune liasse dans cette démo, mais le chemin reste ouvert.'],
-  controler: ['Contrôler', 'Le contrôle attendrait une demande déjà passée. Ici : vitrine.'],
-  parametres: ['Paramètres', 'Quatre options, persistées dans ce navigateur.'],
+  accueil: 'Accueil',
+  traiter: 'Traiter',
+  verifier: 'Vérifier',
+  controler: 'Contrôler',
+  parametres: 'Paramètres',
 }
 
 const views = {
@@ -58,9 +58,8 @@ function showView(name) {
   Object.entries(views).forEach(([key, el]) => {
     el.hidden = key !== name
   })
-  const [title, lede] = TITLES[name]
-  document.getElementById('page-title').textContent = title
-  document.getElementById('page-lede').textContent = lede
+  document.getElementById('page-title').textContent = TITLES[name]
+  document.title = `DSE Demandes — ${TITLES[name]}`
   if (name !== 'accueil') {
     // Keep Accueil diagnose panel mounted but closed when leaving.
     diagPanel.hidden = true
@@ -109,10 +108,7 @@ function renderScores() {
   scoreList.innerHTML = CANDIDATES.map((c) => {
     const star = c.best ? ' <span class="star" title="meilleure proposition">★</span>' : ''
     return `<li class="score-item${c.best ? ' is-best' : ''}">
-      <div>
-        <div class="score-name">${c.name}${star}</div>
-        <div class="score-meta">proposition fictive</div>
-      </div>
+      <div class="score-name">${c.name}${star}</div>
       <div class="score-meta">${c.score.toFixed(2)}</div>
     </li>`
   }).join('')
@@ -147,7 +143,7 @@ function saveSettings(event) {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(next))
   const fb = document.getElementById('params-feedback')
   fb.hidden = false
-  fb.textContent = 'Enregistré dans ce navigateur.'
+  fb.textContent = 'Enregistré.'
   setLive({ action: 'Paramètres enregistrés', pct: 100, eta: '—' })
 }
 
@@ -482,7 +478,7 @@ document.getElementById('btn-copy-report').addEventListener('click', () => {
 
 document.getElementById('btn-choisir').addEventListener('click', () => {
   traiterFeedback.hidden = false
-  traiterFeedback.textContent = `Retenu (fictif) : ${selectedName} ★`
+  traiterFeedback.textContent = `Retenu : ${selectedName} ★`
   setLive({ action: `Identité retenue — ${selectedName}`, pct: 100, eta: 'prêt' })
 })
 
@@ -492,13 +488,13 @@ document.getElementById('btn-ouvrir-pdf').addEventListener('click', () => {
 
 document.getElementById('btn-classer').addEventListener('click', () => {
   traiterFeedback.hidden = false
-  traiterFeedback.textContent = 'Classement simulé — aucun fichier déplacé.'
+  traiterFeedback.textContent = 'Classé.'
   setLive({ action: 'Classer… (simulé)', pct: 100, eta: 'prêt' })
 })
 
 document.getElementById('btn-manuel').addEventListener('click', () => {
   traiterFeedback.hidden = false
-  traiterFeedback.textContent = 'Traitement manuel : à faire sur le PC, pas dans cette démo.'
+  traiterFeedback.textContent = 'Manuel.'
   setLive({ action: 'Traitement manuel (renvoi PC)', pct: 100, eta: '—' })
 })
 
