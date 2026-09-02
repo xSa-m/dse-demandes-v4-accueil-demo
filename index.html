@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DSE Demandes V4 — Accueil (démo UI)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <p class="demo-banner" role="status">
+        Démo UI — pas Charlemagne, pas Acrobat, pas de vraies demandes.
+      </p>
+
+      <header class="live-band" id="live-band" aria-label="Bande live">
+        <div class="live-field" data-live="file">
+          <span class="live-label">Fichier</span>
+          <span class="live-value" id="live-file">—</span>
+        </div>
+        <div class="live-field" data-live="action">
+          <span class="live-label">Action</span>
+          <span class="live-value" id="live-action">Accueil</span>
+        </div>
+        <div class="live-field" data-live="bar">
+          <span class="live-label">Avancement</span>
+          <div class="live-bar-wrap" aria-hidden="true">
+            <div class="live-bar" id="live-bar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="live-field" data-live="eta">
+          <span class="live-label">ETA</span>
+          <span class="live-value" id="live-eta">—</span>
+        </div>
+      </header>
+
+      <main class="stage">
+        <p class="eyebrow">DSE Demandes V4</p>
+        <h1 id="page-title">Accueil</h1>
+        <p class="lede" id="page-lede">
+          Trois portes. Un geste. Rien n’est envoyé hors de ce navigateur.
+        </p>
+
+        <section id="view-accueil" class="view">
+          <div class="portes" aria-label="Portes de travail">
+            <button type="button" class="porte porte-traiter" data-go="traiter">
+              <span class="porte-kicker">Porte 1</span>
+              <span class="porte-title">Traiter</span>
+              <span class="porte-hint">Identité, puis la suite</span>
+            </button>
+            <button type="button" class="porte porte-verifier" data-go="verifier">
+              <span class="porte-kicker">Porte 2</span>
+              <span class="porte-title">Vérifier</span>
+              <span class="porte-hint">Relecture d’une liasse</span>
+            </button>
+            <button type="button" class="porte porte-controler" data-go="controler">
+              <span class="porte-kicker">Porte 3</span>
+              <span class="porte-title">Contrôler</span>
+              <span class="porte-hint">Contrôle final</span>
+            </button>
+          </div>
+
+          <div class="accueil-actions">
+            <button type="button" class="btn-diagnostiquer" id="btn-diagnostiquer">
+              Diagnostiquer
+            </button>
+            <button type="button" class="btn-params-link" data-go="parametres">
+              Paramètres
+            </button>
+          </div>
+
+          <section
+            class="diag-panel"
+            id="diag-panel"
+            hidden
+            aria-live="polite"
+            aria-label="Rapport de diagnostic"
+          >
+            <div class="diag-head">
+              <h2>Diagnostic navigateur</h2>
+              <p class="diag-sub">
+                Batterie locale. Les moteurs PC (Excel, Acrobat, Charlemagne)
+                ne sont pas branchés ici — ils doivent rester N/A ou FAIL.
+              </p>
+            </div>
+            <ol class="diag-list" id="diag-list"></ol>
+            <div class="diag-pc" id="diag-pc"></div>
+            <label class="diag-copy-label" for="diag-report">Rapport à coller</label>
+            <textarea id="diag-report" class="diag-report" readonly rows="16"></textarea>
+            <div class="diag-actions">
+              <button type="button" class="btn-primary" id="btn-copy-report">
+                Copier le rapport
+              </button>
+              <span class="copy-status" id="copy-status" hidden>Copié.</span>
+            </div>
+          </section>
+        </section>
+
+        <section id="view-traiter" class="view" hidden>
+          <article class="card identite">
+            <p class="step-kicker">Étape</p>
+            <h2>Identité</h2>
+            <p class="card-lede">
+              Trois noms fictifs, pour montrer le geste. Aucune demande réelle.
+            </p>
+            <ul class="score-list" id="score-list"></ul>
+            <div class="disclosure" aria-label="Actions Identité">
+              <button type="button" class="btn-primary" id="btn-choisir">Choisir</button>
+              <button type="button" class="btn-ghost" id="btn-ouvrir-pdf">Ouvrir PDF</button>
+              <button type="button" class="btn-ghost" id="btn-classer">Classer…</button>
+              <button type="button" class="btn-ghost" id="btn-manuel">Traitement manuel</button>
+            </div>
+            <p class="feedback" id="traiter-feedback" hidden></p>
+          </article>
+          <button type="button" class="btn-back" data-go="accueil">← Accueil</button>
+        </section>
+
+        <section id="view-verifier" class="view" hidden>
+          <article class="card empty-pretty">
+            <div class="empty-mark" aria-hidden="true">✓</div>
+            <h2>Rien à vérifier</h2>
+            <p>
+              Cette démo n’a pas de liasse. Quand un traitement aura produit
+              une pile, elle apparaîtra ici — pas un cul-de-sac.
+            </p>
+            <button type="button" class="btn-primary" data-go="accueil">
+              Retour à l’accueil
+            </button>
+          </article>
+        </section>
+
+        <section id="view-controler" class="view" hidden>
+          <article class="card empty-pretty">
+            <div class="empty-mark empty-mark-control" aria-hidden="true">◎</div>
+            <h2>Rien à contrôler</h2>
+            <p>
+              Le contrôle final attend une demande déjà traitée et vérifiée.
+              Ici, c’est une vitrine : revenez par une porte, ou diagnostiquez
+              le navigateur depuis l’accueil.
+            </p>
+            <button type="button" class="btn-primary" data-go="accueil">
+              Retour à l’accueil
+            </button>
+          </article>
+        </section>
+
+        <section id="view-parametres" class="view" hidden>
+          <article class="card params-card">
+            <h2>Paramètres</h2>
+            <p class="card-lede">
+              Quatre options, enregistrées dans ce navigateur seulement
+              (localStorage). Aucun serveur.
+            </p>
+            <form id="params-form" class="params-form">
+              <label class="field">
+                <span>Arrêt</span>
+                <select name="arret" id="opt-arret">
+                  <option value="jamais">Ne jamais s’arrêter</option>
+                  <option value="identite">Après Identité</option>
+                  <option value="documents">Après Documents</option>
+                </select>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="adresseSure" id="opt-adresse" />
+                <span>Adresse sûre — n’écrire que vers le dossier sûr</span>
+              </label>
+              <label class="check">
+                <input type="checkbox" name="documentsSurs" id="opt-documents" />
+                <span>Documents sûrs — n’ouvrir que les pièces déjà classées</span>
+              </label>
+              <label class="field">
+                <span>Après Documents</span>
+                <select name="apresDocuments" id="opt-apres">
+                  <option value="continuer">Continuer le flux</option>
+                  <option value="accueil">Revenir à l’accueil</option>
+                  <option value="verifier">Envoyer à Vérifier</option>
+                </select>
+              </label>
+              <div class="params-actions">
+                <button type="submit" class="btn-primary">Enregistrer</button>
+                <button type="button" class="btn-ghost" data-go="accueil">Accueil</button>
+              </div>
+              <p class="feedback" id="params-feedback" hidden></p>
+            </form>
+          </article>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
